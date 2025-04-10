@@ -49,6 +49,16 @@ Shader::Shader(const char* VertexShaderPath, const char* FragmentShaderPath)
 	glLinkProgram(ID);
 }
 
+void Shader::setFloatUniform(const std::string& name, float value)
+{
+	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+void Shader::setMatrix4Uniform(const std::string& name, glm::mat4 value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
 void Shader::UseProgram()
 {
 	glUseProgram(ID);

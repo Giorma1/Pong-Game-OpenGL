@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="..\Dependencies\GLAD\src\glad.c" />
     <ClCompile Include="resources\Buffer.cpp" />
+    <ClCompile Include="resources\GameObject.cpp" />
     <ClCompile Include="resources\Shader.cpp" />
     <ClCompile Include="resources\Vertex.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -142,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Buffer.h" />
+    <ClInclude Include="headers\GameObject.h" />
     <ClInclude Include="headers\Shader.h" />
     <ClInclude Include="headers\Vertex.h" />
   </ItemGroup>
