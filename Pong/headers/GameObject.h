@@ -12,6 +12,8 @@ public:
 	glm::vec2 velocity;
 	glm::vec3 size;
 
+	glm::vec3 originalPos;
+
 	float leftSide = 0;
 	float rightSide = 0;
 	float topSide = 0;
@@ -23,6 +25,9 @@ public:
 	void increaseY(float deltatime);
 	void decreaseX(float deltatime);
 	void decreaseY(float deltatime);
+
+	void reset();
+
 
 
 };

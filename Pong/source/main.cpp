@@ -11,12 +11,13 @@
 #include <headers/Shader.h>
 #include <headers/GameObject.h>
 
-glm::vec2 velocity = glm::vec2(0.6f, 0.6f);
+glm::vec2 Playersvelocity = glm::vec2(0.8f, 0.8f);
+glm::vec2 Ballvelocity = glm::vec2(0.6f, 0.6f);
 
 
-GameObject Player1(glm::vec3(0.95f, 0.0f, 0.0f), velocity, glm::vec3(0.05f, 0.5f, 0.0f));
-GameObject Player2(glm::vec3(-0.95f, 0.0f, 0.0f), velocity, glm::vec3(0.05f, 0.5f, 0.0f));
-GameObject Ball(glm::vec3(0.0f, 0.0f, 0.0f), velocity, glm::vec3(0.05f, 0.05f, 0.0f));
+GameObject Player1(glm::vec3(0.95f, 0.0f, 0.0f), Playersvelocity, glm::vec3(0.05f, 0.5f, 0.0f));
+GameObject Player2(glm::vec3(-0.95f, 0.0f, 0.0f), Playersvelocity, glm::vec3(0.05f, 0.5f, 0.0f));
+GameObject Ball(glm::vec3(0.0f, 0.0f, 0.0f), Ballvelocity, glm::vec3(0.05f, 0.05f, 0.0f));
 
 glm::mat4 player1 = glm::mat4(1.0f);
 glm::mat4 player2 = glm::mat4(1.0f);
@@ -101,39 +102,29 @@ void BallUpdate(float deltatime)
 		Ball.position.y = -1.0f + Ball.size.y / 2 + 0.01f;
 	}
 
-	if (Ball.rightSide >= Player1.leftSide)
+	if (Ball.position.x > 1.0f or Ball.position.x < -1.0f)
+	{
+		isGameStart = false;
+		Ball.velocity.x = (rand() % 2 == 0 * 32) ? -0.6f : 0.6;
+		Ball.velocity.y = (rand() % 2 == 0 * 12) ? -0.8f : 0.8;
+
+		Ball.reset();
+		Player1.reset();
+		Player2.reset();
+	}
+
+	if (Ball.rightSide >= Player1.leftSide and Ball.downSide <= Player1.topSide and Ball.topSide >= Player1.downSide)
 	{
 		Ball.velocity.x *= -1;
 		Ball.position.x -= 0.001f;
 	}
 
-	if (Ball.downSide <= Player1.topSide)
-	{
-		Ball.velocity.y *= -1;
-		Ball.position.y += 0.001;
-	}
-	if (Ball.topSide >= Player1.downSide)
-	{
-		Ball.velocity.y *= -1;
-		Ball.position.y -= 0.001;
-	}
-
-	if (Ball.leftSide <= Player2.rightSide)
+	if (Ball.leftSide <= Player2.rightSide and Ball.topSide >= Player2.downSide and Ball.downSide <= Player2.topSide)
 	{
 		Ball.velocity.x *= -1;
 		Ball.position.x += 0.001f;
 	}
-	if (Ball.topSide >= Player2.downSide)
-	{
-		Ball.velocity.y *= -1;
-		Ball.position.y -= 0.001;
-	}
-
-	if (Ball.downSide <= Player2.topSide)
-	{
-		Ball.velocity.y *= -1;
-		Ball.position.y += 0.001;
-	}
+	
 }
 
 int main()
@@ -188,7 +179,7 @@ int main()
 	EBO.Bind();
 
 	
-
+	glEnable(GL_BLEND);
 	
 
 	while (!glfwWindowShouldClose(window))

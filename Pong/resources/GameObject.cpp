@@ -6,7 +6,9 @@ GameObject::GameObject(glm::vec3 position, glm::vec2 velocity, glm::vec3 size)
 	this-> velocity = velocity;
 	this-> size = size;
 
+	this->originalPos = position;
 	
+
 }
 
 void GameObject::increaseX(float deltatime)
@@ -26,3 +28,9 @@ void GameObject::decreaseY(float deltatime)
 {
 	this->position.y -= this->velocity.y * deltatime;
 }
+
+void GameObject::reset()
+{
+	this->position = originalPos;
+}
+
